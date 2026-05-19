@@ -1,0 +1,839 @@
+/* style.css */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Pretendard, sans-serif;
+  background: #f8f6f2;
+  color: #1c1c1c;
+  line-height: 1.6;
+}
+
+
+
+/* common */
+img {
+  width: 100%;
+  height: auto;
+  /* 높이가 자동 조절되도록 수정 */
+  object-fit: cover;
+  /* 그리드 박스 안에서 이미지가 예쁘게 채워지도록 처리 */
+  display: block;
+}
+
+section {
+  padding: 140px 80px;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.section-title span {
+  font-size: 13px;
+  letter-spacing: 3px;
+  color: #999;
+}
+
+.section-title h2 {
+  font-size: 48px;
+  margin-top: 14px;
+  font-weight: 700;
+}
+
+
+
+/* header */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 90px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0 80px;
+
+  background: rgba(248, 246, 242, 0.85);
+  backdrop-filter: blur(10px);
+
+  z-index: 1000;
+}
+
+.logo {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.nav {
+  display: flex;
+  gap: 42px;
+}
+
+.nav a {
+  text-decoration: none;
+  color: #111;
+  font-size: 15px;
+}
+
+
+
+/* hero */
+.hero {
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 80px;
+
+  padding-top: 160px;
+}
+
+.hero-text {
+  flex: 1;
+}
+
+.hero-label {
+  font-size: 13px;
+  letter-spacing: 3px;
+  color: #999;
+}
+
+.hero-text h1 {
+  font-size: 82px;
+  line-height: 1.1;
+  margin: 24px 0;
+}
+
+.hero-text p {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 40px;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 16px;
+}
+
+.btn-dark,
+.btn-light {
+  padding: 18px 32px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 15px;
+}
+
+.btn-dark {
+  background: #111;
+  color: white;
+}
+
+.btn-light {
+  border: 1px solid #ddd;
+  color: #111;
+}
+
+.hero-image {
+  flex: 1;
+}
+
+.hero-image img {
+  max-width: 500px;
+  /* 대형 모니터에서도 이미지가 너무 무한정 커지지 않도록 제한 */
+  margin: 0 auto;
+
+  /* 크기가 변할 때 깨짐을 방지하고 선명하게 렌더링하는 브라우저 속성 */
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+
+
+/* story */
+.story-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.story-card {
+  background: white;
+  padding: 42px;
+  border-radius: 30px;
+}
+
+.story-card h3 {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+
+
+/* process */
+.process {
+  background: white;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.timeline-item {
+  display: flex;
+  gap: 40px;
+}
+
+.timeline-number {
+  min-width: 100px;
+  height: 100px;
+
+  border-radius: 50%;
+  background: #111;
+  color: white;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.timeline-content {
+  flex: 1;
+}
+
+.timeline-content h3 {
+  font-size: 36px;
+  margin-bottom: 18px;
+}
+
+.prompt-box {
+  margin-top: 24px;
+  background: #f5f5f5;
+  padding: 24px;
+  border-radius: 20px;
+  color: #555;
+}
+
+
+
+/* portfolio */
+.portfolio-heading {
+  margin-bottom: 36px;
+}
+
+.portfolio-heading h3 {
+  font-size: 34px;
+}
+
+.portfolio-heading p {
+  color: #777;
+}
+
+.portfolio-top {
+  margin-bottom: 90px;
+}
+
+.emoji-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.emoji-card {
+  background: white;
+  padding: 20px;
+  border-radius: 28px;
+}
+
+.pose-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.pose-card {
+  background: white;
+  padding: 20px;
+  border-radius: 28px;
+}
+
+
+
+/* goods */
+.goods {
+  background: white;
+}
+
+.goods-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.goods-card {
+  background: #f8f6f2;
+  padding: 24px;
+  border-radius: 30px;
+}
+
+.goods-card h3 {
+  margin-top: 20px;
+  font-size: 24px;
+}
+
+
+
+/* copyright */
+.copyright-box {
+  background: #111;
+  color: white;
+
+  padding: 60px;
+  border-radius: 40px;
+  text-align: center;
+}
+
+.copyright-box h3 {
+  font-size: 42px;
+  margin-bottom: 24px;
+}
+
+.copyright-box p {
+  color: #ccc;
+  margin-bottom: 20px;
+}
+
+.copyright-box span {
+  color: #ffbebe;
+}
+
+
+
+/* footer */
+.footer {
+  padding: 40px;
+  text-align: center;
+  border-top: 1px solid #ddd;
+}
+
+.footer p {
+  color: #777;
+}
+
+
+
+/* responsive */
+@media(max-width:1024px) {
+
+  section {
+    padding: 100px 32px;
+  }
+
+  .header {
+    padding: 0 32px;
+  }
+
+  .hero {
+    flex-direction: column;
+  }
+
+  .hero-text h1 {
+    font-size: 56px;
+  }
+
+  .story-grid,
+  .goods-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .emoji-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .pose-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .timeline-item {
+    flex-direction: column;
+  }
+
+}
+
+/* =================================*********
+   포카 캐릭터들을 위한 귀여운 인터랙션 효과 
+============================================ */
+
+/* 1. 메인 히어로 캐릭터: 마우스를 올리면 위로 슬며시 부드럽게 떠오름 */
+.hero-image img {
+  transition: transform 0.4s ease-in-out;
+  /* 부드러운 움직임 시간 설정 */
+}
+
+.hero-image img:hover {
+  transform: translateY(-15px);
+  /* 위로 15픽셀 둥실 떠오름 */
+}
+
+
+/* 2. 이모티콘 & 포즈 카드: 마우스를 올리면 뿅! 하고 통통 튀는 효과 */
+.emoji-card,
+.pose-card {
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+}
+
+.emoji-card:hover,
+.pose-card:hover {
+  transform: translateY(-10px) scale(1.05);
+  /* 위로 가면서 살짝 커짐 (통통 튀는 느낌) */
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+  /* 밑에 부드러운 그림자 생성 */
+  cursor: pointer;
+}
+
+
+/* 3. 굿즈 목업 카드: 슬며시 다가오는 듯한 고급스러운 확대 효과 */
+.goods-card {
+  overflow: hidden;
+  /* 이미지가 박스 바깥으로 삐져나가지 않도록 커팅 */
+}
+
+.goods-card img {
+  transition: transform 0.5s ease;
+}
+
+.goods-card:hover img {
+  transform: scale(1.08);
+  /* 마우스를 올리면 박스 안의 굿즈 사진만 확대됨 */
+}
+
+.goods-card {
+  transition: box-shadow 0.3s ease;
+}
+
+.goods-card:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+}
+
+/* 이모티콘 그리드를 한 줄에 4개씩 고정 */
+.emoji-grid {
+  display: grid;
+  /* 🌟 핵심: 무조건 한 줄에 동일한 비율로 4개의 칼럼(박스)을 생성합니다 */
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  /* 박스 사이의 간격 */
+  max-width: 1200px;
+  /* 대형 화면에서 너무 퍼지지 않게 제한 */
+  margin: 40px auto 0;
+  /* 중앙 정렬 및 상단 여백 */
+  width: 100%;
+}
+
+/* 카드 자체의 디자인 유지 및 정돈 */
+.emoji-card {
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  padding: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+  /* 부드러운 음영 추가 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.emoji-card img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+/* 📱 모바일이나 태블릿 화면을 위한 반응형 대응 (선택사항) */
+@media (max-width: 1024px) {
+  .emoji-grid {
+    grid-template-columns: repeat(2, 1fr);
+    /* 패드 화면에서는 한 줄에 2개씩 */
+  }
+}
+
+@media (max-width: 600px) {
+  .emoji-grid {
+    grid-template-columns: 1fr;
+    /* 모바일 폰에서는 한 줄에 1개씩 쭈르륵 */
+  }
+}
+
+/* =================================*********
+   🔥 40 Character Poses (포즈 그리드) 정렬 및 깨짐 방지 
+============================================ */
+.pose-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  /* 한 줄에 4개씩 균등 배분 */
+  gap: 24px;
+  max-width: 1200px;
+  margin: 40px auto 0;
+  width: 100%;
+}
+
+.pose-card {
+  background: #fff;
+  border-radius: 24px;
+  overflow: hidden;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pose-card img {
+  width: 100%;
+  height: auto;
+  max-width: 220px;
+  /* 포카 이미지가 과도하게 커져서 깨지는 것을 완벽 방지 */
+  object-fit: contain;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+/* 📱 반응형 화면 설정 */
+@media (max-width: 1024px) {
+  .pose-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .pose-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+/* =================================*********
+     🧸 POKA Official Profile Section (CSS 분리 버전)
+============================================ --> */
+
+/* 전체 섹션 배경 및 레이아웃 */
+.poka-profile-section {
+  padding: 120px 0;
+  background-color: #f8f6f2;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.poka-profile-section .poka-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+
+/* 상단 타이틀 구역 */
+.poka-profile-section .poka-title-area {
+  text-align: center;
+  margin-bottom: 70px;
+}
+
+.poka-profile-section .poka-subtitle {
+  font-size: 14px;
+  letter-spacing: 3px;
+  color: #8b5e3c;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.poka-profile-section .poka-main-title {
+  font-size: 34px;
+  font-weight: 800;
+  color: #222;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+/* 메인 콘텐츠 2단 레이아웃 (3단에서 2단 배열로 최적화) */
+.poka-profile-section .profile-flex-container {
+  display: flex;
+  gap: 35px;
+  align-items: stretch;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* 🎨 [기본 정보 카드 내부] 상단 포카 이미지 구역 설정 */
+.poka-profile-section .poka-top-char-visual {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 25px;
+  /* 기본 정보 타이틀과의 간격 */
+  margin-bottom: 15px;
+  border-bottom: 1px dashed #f0eae4;
+  /* 이미지와 텍스트 구분을 위한 은은한 점선 */
+}
+
+.poka-profile-section .poka-top-char-visual img {
+  width: 100%;
+  height: auto;
+  max-width: 200px;
+  /* 기본 정보 카드 크기에 맞춰 알맞게 조정 */
+  object-fit: contain;
+  filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.04));
+  image-rendering: -webkit-optimize-contrast;
+}
+
+/* 📝 [왼쪽] 1. 기본 정보 카드 (포카 포함) */
+.poka-profile-section .poka-info-card {
+  flex: 1.2;
+  min-width: 340px;
+  background: #ffffff;
+  padding: 45px 40px;
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(139, 94, 60, 0.03);
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+/* 공통 카드 타이틀 숫자 배지 스타일 */
+.poka-profile-section .badge-num {
+  font-size: 15px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+}
+
+/* 📝 [가운데] 1. 기본 정보 카드 */
+.poka-profile-section .poka-info-card {
+  flex: 1.3;
+  min-width: 340px;
+  background: #ffffff;
+  padding: 45px 40px;
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(139, 94, 60, 0.03);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.poka-profile-section .poka-info-card h3 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 30px;
+  color: #222;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.poka-profile-section .poka-info-card h3 .badge-num {
+  color: #8b5e3c;
+  background: #f0eae4;
+  font-size: 16px;
+  width: 26px;
+  height: 26px;
+}
+
+.poka-profile-section .poka-info-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.poka-profile-section .poka-info-table tr {
+  border-bottom: 1px solid #f5efe9;
+}
+
+.poka-profile-section .poka-info-table tr:last-child {
+  border-bottom: none;
+}
+
+.poka-profile-section .poka-info-table th {
+  padding: 20px 10px;
+  text-align: left;
+  width: 28%;
+  font-weight: 700;
+  color: #8b5e3c;
+  font-size: 15px;
+}
+
+.poka-profile-section .poka-info-table td {
+  padding: 20px 10px;
+  color: #333;
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+
+.poka-profile-section .poka-info-table td .birth-sub {
+  font-size: 12.5px;
+  color: #999;
+  margin-left: 4px;
+}
+
+/* 📜 [오른쪽] 2. 세계관 & 3. 취향 노트 그룹 컨테이너 */
+.poka-profile-section .poka-right-group {
+  flex: 1.3;
+  min-width: 340px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  box-sizing: border-box;
+}
+
+/* 2. 정체성 & 세계관 상자 (크림색 배경) */
+.poka-profile-section .poka-story-card {
+  background: #fff9ee;
+  padding: 40px;
+  border-radius: 24px;
+  border: 1px solid #f5eacf;
+  box-shadow: 0 6px 20px rgba(245, 234, 207, 0.15);
+  box-sizing: border-box;
+}
+
+.poka-profile-section .poka-story-card h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 18px;
+  color: #8b5e3c;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.poka-profile-section .poka-story-card h3 .badge-num {
+  color: #fff;
+  background: #8b5e3c;
+}
+
+.poka-profile-section .poka-story-quote {
+  margin: 0 0 16px 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #c47d4b;
+  line-height: 1.5;
+}
+
+.poka-profile-section .poka-story-card p {
+  margin: 0;
+  font-size: 14px;
+  color: #555;
+  line-height: 1.65;
+  text-align: justify;
+}
+
+/* 3. 취향 노트 상자 */
+.poka-profile-section .poka-taste-card {
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(139, 94, 60, 0.03);
+  box-sizing: border-box;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.poka-profile-section .poka-taste-card h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 24px;
+  color: #222;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.poka-profile-section .poka-taste-card h3 .badge-num {
+  color: #333;
+  background: #e8e3dc;
+}
+
+.poka-profile-section .taste-flex-wrap {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.poka-profile-section .taste-sub-box {
+  flex: 1;
+  min-width: 220px;
+  background: #faf8f5;
+  padding: 22px;
+  border-radius: 18px;
+  box-sizing: border-box;
+}
+
+.poka-profile-section .taste-sub-box h4 {
+  margin-top: 0;
+  margin-bottom: 14px;
+  font-size: 14.5px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.poka-profile-section .taste-sub-box h4.like-title {
+  color: #d9534f;
+}
+
+.poka-profile-section .taste-sub-box h4.hate-title {
+  color: #5bc0de;
+}
+
+.poka-profile-section .taste-sub-box ul {
+  padding-left: 16px;
+  margin: 0;
+  font-size: 13.5px;
+  color: #555;
+  line-height: 1.65;
+}
+
+.poka-profile-section .taste-sub-box ul li {
+  margin-bottom: 10px;
+}
+
+.poka-profile-section .taste-sub-box ul li:last-child {
+  margin-bottom: 0;
+}
+
+.poka-profile-section .taste-sub-box ul li span {
+  font-size: 11.5px;
+  color: #999;
+  display: block;
+  margin-top: 2px;
+}
