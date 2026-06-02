@@ -256,24 +256,58 @@ section {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 24px;
+  max-width: 1200px;
+  margin: 40px auto 0;
+  width: 100%;
 }
 
 .emoji-card {
-  background: white;
-  padding: 20px;
-  border-radius: 28px;
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  padding: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.emoji-card img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
 }
 
 .pose-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 24px;
+  max-width: 1200px;
+  margin: 40px auto 0;
+  width: 100%;
 }
 
 .pose-card {
-  background: white;
+  background: #fff;
+  border-radius: 24px;
+  overflow: hidden;
   padding: 20px;
-  border-radius: 28px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pose-card img {
+  width: 100%;
+  height: auto;
+  max-width: 220px;
+  object-fit: contain;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
 }
 
 
@@ -341,42 +375,38 @@ section {
 
 
 
-/* responsive */
-@media(max-width:1024px) {
+/* hamburger navigation base styles */
+.hamburger-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 26px;
+  height: 18px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1001;
+}
 
-  section {
-    padding: 100px 32px;
-  }
+.hamburger-btn span {
+  width: 100%;
+  height: 2px;
+  background-color: #111;
+  border-radius: 4px;
+  transition: all 0.3s ease-in-out;
+}
 
-  .header {
-    padding: 0 32px;
-  }
+.hamburger-btn.active span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
 
-  .hero {
-    flex-direction: column;
-  }
+.hamburger-btn.active span:nth-child(2) {
+  opacity: 0;
+}
 
-  .hero-text h1 {
-    font-size: 56px;
-  }
-
-  .story-grid,
-  .goods-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .emoji-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .pose-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .timeline-item {
-    flex-direction: column;
-  }
-
+.hamburger-btn.active span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
 }
 
 /* =================================*********
@@ -435,103 +465,7 @@ section {
   cursor: pointer;
 }
 
-/* 이모티콘 그리드를 한 줄에 4개씩 고정 */
-.emoji-grid {
-  display: grid;
-  /* 🌟 핵심: 무조건 한 줄에 동일한 비율로 4개의 칼럼(박스)을 생성합니다 */
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
-  /* 박스 사이의 간격 */
-  max-width: 1200px;
-  /* 대형 화면에서 너무 퍼지지 않게 제한 */
-  margin: 40px auto 0;
-  /* 중앙 정렬 및 상단 여백 */
-  width: 100%;
-}
-
-/* 카드 자체의 디자인 유지 및 정돈 */
-.emoji-card {
-  background: #fff;
-  border-radius: 20px;
-  overflow: hidden;
-  padding: 16px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
-  /* 부드러운 음영 추가 */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.emoji-card img {
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
-}
-
-/* 📱 모바일이나 태블릿 화면을 위한 반응형 대응 (선택사항) */
-@media (max-width: 1024px) {
-  .emoji-grid {
-    grid-template-columns: repeat(2, 1fr);
-    /* 패드 화면에서는 한 줄에 2개씩 */
-  }
-}
-
-@media (max-width: 600px) {
-  .emoji-grid {
-    grid-template-columns: 1fr;
-    /* 모바일 폰에서는 한 줄에 1개씩 쭈르륵 */
-  }
-}
-
-/* =================================*********
-   🔥 40 Character Poses (포즈 그리드) 정렬 및 깨짐 방지 
-============================================ */
-.pose-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  /* 한 줄에 4개씩 균등 배분 */
-  gap: 24px;
-  max-width: 1200px;
-  margin: 40px auto 0;
-  width: 100%;
-}
-
-.pose-card {
-  background: #fff;
-  border-radius: 24px;
-  overflow: hidden;
-  padding: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.pose-card img {
-  width: 100%;
-  height: auto;
-  max-width: 220px;
-  /* 포카 이미지가 과도하게 커져서 깨지는 것을 완벽 방지 */
-  object-fit: contain;
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
-}
-
-/* 📱 반응형 화면 설정 */
-@media (max-width: 1024px) {
-  .pose-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
-  .pose-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
+/* Consolidated emoji and pose layouts */
 
 
 /* =================================*********
@@ -836,4 +770,449 @@ section {
   color: #999;
   display: block;
   margin-top: 2px;
+}
+
+/* =================================*********
+   📱 RESPONSIVE MEDIA QUERIES (Systematic block)
+============================================ */
+
+/* 1. Tablet View (768px - 1023px) */
+@media (max-width: 1024px) {
+  section {
+    padding: 100px 32px;
+  }
+
+  .header {
+    padding: 0 32px;
+  }
+
+  .hero {
+    padding-top: 140px;
+    flex-direction: column;
+    gap: 40px;
+    text-align: center;
+  }
+
+  .hero-text h1 {
+    font-size: 56px;
+  }
+
+  .hero-buttons {
+    justify-content: center;
+  }
+
+  .hero-image {
+    order: -1;
+  }
+
+  .story-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .emoji-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .pose-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .goods-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .profile-flex-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .poka-profile-section .poka-info-card, 
+  .poka-profile-section .poka-right-group {
+    width: 100%;
+    min-width: 100% !important;
+  }
+}
+
+/* 2. Mobile View (767px and below) */
+@media (max-width: 767px) {
+  section {
+    padding: 60px 20px;
+  }
+
+  .header {
+    padding: 14px 20px;
+    height: auto;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .logo {
+    font-size: 20px;
+    margin-bottom: 4px;
+  }
+
+  /* Hamburger Menu Toggle */
+  .hamburger-btn {
+    display: flex;
+  }
+
+  .nav {
+    position: absolute;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    background: rgba(248, 246, 242, 0.96);
+    backdrop-filter: blur(15px);
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+    opacity: 0;
+    pointer-events: none;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  }
+
+  .nav.active {
+    display: flex;
+    max-height: 300px;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .nav a {
+    width: 100%;
+    text-align: center;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  .nav a:last-child {
+    border-bottom: none;
+  }
+
+  /* Hero Section */
+  .hero {
+    padding-top: 100px;
+    min-height: auto;
+    gap: 30px;
+  }
+
+  .hero-text h1 {
+    font-size: 38px;
+    line-height: 1.25;
+    margin: 16px 0;
+  }
+
+  .hero-text p {
+    font-size: 15px;
+    margin-bottom: 24px;
+    word-break: keep-all;
+  }
+
+  .hero-buttons {
+    flex-direction: row;
+    gap: 12px;
+  }
+
+  .btn-dark, .btn-light {
+    flex: 1;
+    padding: 0 16px;
+    height: 48px;
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 24px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .hero-image img {
+    max-width: 280px;
+  }
+
+  /* Brand Story */
+  .section-title {
+    margin-bottom: 40px;
+  }
+
+  .section-title h2 {
+    font-size: 26px;
+    margin-top: 8px;
+    line-height: 1.3;
+    word-break: keep-all;
+  }
+
+  .story-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .story-card {
+    padding: 24px;
+    border-radius: 20px;
+  }
+
+  .story-card h3 {
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+
+  .story-card p {
+    font-size: 14px;
+  }
+
+  /* Profile Section */
+  .poka-profile-section {
+    padding: 60px 0;
+  }
+
+  .poka-profile-section .poka-title-area {
+    margin-bottom: 40px;
+  }
+
+  .poka-profile-section .poka-main-title {
+    font-size: 24px;
+  }
+
+  .poka-profile-section .poka-info-card {
+    padding: 30px 20px !important;
+    border-radius: 20px;
+  }
+
+  .poka-profile-section .poka-info-card h3 {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+
+  .poka-profile-section .poka-info-table th,
+  .poka-profile-section .poka-info-table td {
+    padding: 12px 4px;
+    font-size: 13.5px;
+  }
+
+  .poka-profile-section .poka-info-table th {
+    width: 25%;
+    font-size: 13.5px;
+  }
+
+  .poka-profile-section .poka-story-card {
+    padding: 30px 20px !important;
+    border-radius: 20px;
+  }
+
+  .poka-profile-section .poka-story-card h3 {
+    font-size: 18px;
+    margin-bottom: 14px;
+  }
+
+  .poka-profile-section .poka-story-quote {
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+
+  .poka-profile-section .poka-story-card p {
+    font-size: 13px;
+  }
+
+  .poka-profile-section .poka-taste-card {
+    padding: 30px 20px !important;
+    border-radius: 20px;
+  }
+
+  .poka-profile-section .poka-taste-card h3 {
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+
+  .poka-profile-section .taste-flex-wrap {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .poka-profile-section .taste-sub-box {
+    padding: 16px;
+    border-radius: 14px;
+  }
+
+  .poka-profile-section .taste-sub-box h4 {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  .poka-profile-section .taste-sub-box ul {
+    font-size: 12.5px;
+  }
+
+  /* Process Timeline */
+  .timeline {
+    gap: 30px;
+  }
+
+  .timeline-item {
+    gap: 16px;
+  }
+
+  .timeline-number {
+    width: 60px;
+    height: 60px;
+    min-width: 60px;
+    max-width: 60px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    font-size: 18px;
+  }
+
+  .timeline-content h3 {
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+
+  .timeline-content p {
+    font-size: 14px;
+  }
+
+  .prompt-box {
+    padding: 16px;
+    margin-top: 12px;
+    font-size: 13px;
+    border-radius: 14px;
+    word-break: keep-all;
+  }
+
+  /* Showcase (Emoticons & Poses) - Reconfigured to 2 Columns */
+  .portfolio-top {
+    margin-bottom: 50px;
+  }
+
+  .portfolio-heading h3 {
+    font-size: 22px;
+  }
+
+  .portfolio-heading p {
+    font-size: 13px;
+  }
+
+  .emoji-grid, .pose-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+    margin-top: 20px;
+  }
+
+  .emoji-card, .pose-card {
+    padding: 12px !important;
+    border-radius: 16px;
+  }
+
+  .pose-card img {
+    max-width: 100%;
+  }
+
+  /* Goods Mockup - Reconfigured to 1 Column Stacked */
+  .goods-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .goods-card {
+    padding: 16px !important;
+    border-radius: 20px;
+  }
+
+  .goods-card h3 {
+    font-size: 18px;
+    margin-top: 12px;
+  }
+
+  /* Copyright & Footer */
+  .copyright-box {
+    padding: 36px 20px;
+    border-radius: 24px;
+  }
+
+  .copyright-box h3 {
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+
+  .copyright-box p {
+    font-size: 13.5px;
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+
+  .copyright-box span {
+    font-size: 12.5px;
+  }
+
+  .footer {
+    padding: 24px 16px;
+  }
+
+  .footer p {
+    font-size: 12px;
+  }
+}
+
+/* ==========================================
+   Mobile Responsive Styles (767px and below)
+   ========================================== */
+@media (max-width: 767px) {
+  /* 1. Header & Navigation Emergency Fix */
+  .header {
+    flex-direction: column !important;
+    padding: 15px 20px !important;
+    text-align: center;
+  }
+  .logo {
+    font-size: 20px !important;
+    margin-bottom: 12px !important;
+  }
+  .nav {
+    display: flex;
+    justify-content: center;
+    gap: 15px !important;
+  }
+  .nav a {
+    font-size: 14px !important;
+  }
+
+  /* 2. Hero Section Mobile Layout */
+  .hero {
+    flex-direction: column !important;
+    padding: 40px 20px !important;
+    text-align: center;
+  }
+  .hero-text h1 {
+    font-size: 28px !important;
+    line-height: 1.3 !important;
+  }
+
+  /* 3. Timeline Circle Fix (No Distortion) */
+  .timeline-number,
+  .history-circle,
+  [class*="circle"] {
+    width: 60px !important;
+    height: 60px !important;
+    min-width: 60px !important;
+    min-height: 60px !important;
+    border-radius: 50% !important;
+    flex-shrink: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  /* 4. Global Container Padding */
+  section, .container {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
 }

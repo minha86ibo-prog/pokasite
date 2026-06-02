@@ -18,6 +18,12 @@
   <header class="header">
     <div class="logo">POKA FRIENDS</div>
 
+    <button class="hamburger-btn" aria-label="메뉴 열기" id="hamburgerBtn">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
     <nav class="nav">
       <a href="#about">About</a>
       <a href="#process">Process</a>
@@ -391,6 +397,24 @@
 
   </footer>
 
+  <script>
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const nav = document.querySelector('.nav');
+
+    hamburgerBtn.addEventListener('click', () => {
+      hamburgerBtn.classList.toggle('active');
+      nav.classList.toggle('active');
+    });
+
+    // Close menu when a link is clicked
+    document.querySelectorAll('.nav a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburgerBtn.classList.remove('active');
+        nav.classList.remove('active');
+      });
+    });
+  </script>
+
 </body>
 
-</html>
+</html>
