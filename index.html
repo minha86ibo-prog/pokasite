@@ -502,10 +502,14 @@
         charIndex++;
         setTimeout(typeEffect, typingDelay);
       } else {
+        // Explicitly dispatch synthetic events to force mobile browser update
+        typedTextSpan.dispatchEvent(new Event('input', { bubbles: true }));
+        typedTextSpan.dispatchEvent(new Event('change', { bubbles: true }));
+
         // Hide cursor when typing is done
         if (cursorSpan) cursorSpan.style.display = 'none';
         
-        // Trigger Poka creation
+        // Trigger Poka creation explicitly right after
         triggerPokaCreation();
       }
     }
