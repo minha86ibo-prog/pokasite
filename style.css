@@ -66,8 +66,13 @@ section {
 
   padding: 0 80px;
 
-  background: rgba(248, 246, 242, 0.85);
+  /* 🌫️ Frosted-glass separation */
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  /* Crisp boundary from sections below */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 
   z-index: 1000;
 }
@@ -87,6 +92,29 @@ section {
   text-decoration: none;
   color: #111;
   font-size: 15px;
+  position: relative;          /* underline pseudo-element anchor */
+  padding-bottom: 4px;         /* space for the underline bar */
+  transition: color 0.3s ease;
+}
+
+/* Animated underline — expands from left on hover */
+.nav a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #3C2A21;
+  transition: width 0.3s ease;
+}
+
+.nav a:hover {
+  color: #3C2A21;
+}
+
+.nav a:hover::after {
+  width: 100%;
 }
 
 
@@ -114,16 +142,22 @@ section {
 }
 
 .hero-text h1 {
-  font-size: 82px;
-  line-height: 1.1;
-  margin: 24px 0;
+  font-size: 42px;
+  line-height: 1.4;
+  margin: 20px 0;
+  word-break: keep-all;
+  white-space: nowrap; /* <br>은 유지하면서 자동 줄바꿈만 차단 → 마침표 분리 방지 */
 }
 
 .hero-text p {
-  font-size: 18px;
+  font-size: 16px;
   color: #666;
-  margin-bottom: 40px;
+  margin-bottom: 36px;
+  line-height: 1.75;
+  word-break: keep-all;
 }
+
+
 
 .hero-buttons {
   display: flex;
@@ -136,30 +170,67 @@ section {
   border-radius: 999px;
   text-decoration: none;
   font-size: 15px;
+  transition: all 0.3s ease-in-out;
 }
 
 .btn-dark {
-  background: #111;
-  color: white;
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid #e0e0e0;
 }
 
 .btn-light {
+  background: #ffffff;
   border: 1px solid #ddd;
-  color: #111;
+  color: #000000;
 }
 
 .hero-image {
   flex: 1;
+  position: relative; /* stacking context for crossfade layers */
 }
 
-.hero-image img {
-  max-width: 500px;
-  /* 대형 모니터에서도 이미지가 너무 무한정 커지지 않도록 제한 */
+/* ── Shared image layer styles ── */
+.hero-image .hero-img-default,
+.hero-image .hero-img-hover {
+  max-width: 460px;
   margin: 0 auto;
-
-  /* 크기가 변할 때 깨짐을 방지하고 선명하게 렌더링하는 브라우저 속성 */
   image-rendering: -webkit-optimize-contrast;
   image-rendering: crisp-edges;
+  display: block;
+}
+
+/* Default layer: floats gently, fully visible */
+.hero-image .hero-img-default {
+  position: relative;
+  z-index: 1;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+  animation: softFloat 4s ease-in-out infinite;
+}
+
+/* Hover layer: stacked on top, invisible until hover */
+.hero-image .hero-img-hover {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  animation: softFloat 4s ease-in-out infinite;
+  pointer-events: none; /* let hover events pass through to the container */
+}
+
+/* Crossfade on hover or touch (active state) */
+.hero-image:hover .hero-img-default,
+.hero-image:focus-within .hero-img-default {
+  opacity: 0;
+}
+
+.hero-image:hover .hero-img-hover,
+.hero-image:focus-within .hero-img-hover {
+  opacity: 1;
 }
 
 
@@ -325,13 +396,19 @@ section {
 
 .goods-card {
   background: #f8f6f2;
-  padding: 24px;
-  border-radius: 30px;
+  padding: 16px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 
 .goods-card h3 {
-  margin-top: 20px;
-  font-size: 24px;
+  margin-top: 16px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #333;
+  padding-left: 4px;
 }
 
 
@@ -448,7 +525,13 @@ section {
 }
 
 .goods-card img {
+  width: 100%;
+  aspect-ratio: 1 / 1.1; /* Standard vertical rectangle ratio */
+  object-fit: cover;
+  object-position: center;
+  border-radius: 12px; /* Inner rounding to match card */
   transition: transform 0.5s ease;
+  display: block;
 }
 
 .goods-card:hover img {
@@ -1216,3 +1299,1149 @@ section {
     padding-right: 20px !important;
   }
 }
+
+/* --- POKA Emotional Floating Animation --- */
+@keyframes softFloat {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-14px); }
+  100% { transform: translateY(0); }
+}
+
+.hero {
+  background: radial-gradient(circle at right, rgba(245,239,230,0.6) 0%, rgba(249,248,246,1) 60%) !important;
+}
+
+.btn-dark:hover,
+.btn-light:hover {
+  background: #000000 !important;
+  color: #ffffff !important;
+  border-color: #000000 !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+/* =============================================
+   🔤 Hero Title: Letter-by-Letter Pop Animation
+   ============================================= */
+
+@keyframes fadeInUpPop {
+  0%   { opacity: 0; transform: translateY(20px) scale(0.8); }
+  60%  { opacity: 1; transform: translateY(-3px) scale(1.1); }
+  80%  { transform: translateY(1px) scale(0.97); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.hero-title-animated span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px) scale(0.8);
+  animation: fadeInUpPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* — 1행: 17 spans — */
+.hero-title-animated span:nth-child(1)  { animation-delay: 0.08s; }
+.hero-title-animated span:nth-child(2)  { animation-delay: 0.16s; }
+.hero-title-animated span:nth-child(3)  { animation-delay: 0.24s; }
+.hero-title-animated span:nth-child(4)  { animation-delay: 0.32s; }
+.hero-title-animated span:nth-child(5)  { animation-delay: 0.40s; }
+.hero-title-animated span:nth-child(6)  { animation-delay: 0.48s; }
+.hero-title-animated span:nth-child(7)  { animation-delay: 0.56s; }
+.hero-title-animated span:nth-child(8)  { animation-delay: 0.64s; }
+.hero-title-animated span:nth-child(9)  { animation-delay: 0.72s; }
+.hero-title-animated span:nth-child(10) { animation-delay: 0.80s; }
+.hero-title-animated span:nth-child(11) { animation-delay: 0.88s; }
+.hero-title-animated span:nth-child(12) { animation-delay: 0.96s; }
+.hero-title-animated span:nth-child(13) { animation-delay: 1.04s; }
+.hero-title-animated span:nth-child(14) { animation-delay: 1.12s; }
+.hero-title-animated span:nth-child(15) { animation-delay: 1.20s; }
+.hero-title-animated span:nth-child(16) { animation-delay: 1.28s; }
+.hero-title-animated span:nth-child(17) { animation-delay: 1.36s; }
+/* — 2행: 20 spans (br 이후, nth-child는 전체 기준 연속) — */
+.hero-title-animated span:nth-child(18) { animation-delay: 1.44s; }
+.hero-title-animated span:nth-child(19) { animation-delay: 1.52s; }
+.hero-title-animated span:nth-child(20) { animation-delay: 1.60s; }
+.hero-title-animated span:nth-child(21) { animation-delay: 1.68s; }
+.hero-title-animated span:nth-child(22) { animation-delay: 1.76s; }
+.hero-title-animated span:nth-child(23) { animation-delay: 1.84s; }
+.hero-title-animated span:nth-child(24) { animation-delay: 1.92s; }
+.hero-title-animated span:nth-child(25) { animation-delay: 2.00s; }
+.hero-title-animated span:nth-child(26) { animation-delay: 2.08s; }
+.hero-title-animated span:nth-child(27) { animation-delay: 2.16s; }
+.hero-title-animated span:nth-child(28) { animation-delay: 2.24s; }
+.hero-title-animated span:nth-child(29) { animation-delay: 2.32s; }
+.hero-title-animated span:nth-child(30) { animation-delay: 2.40s; }
+.hero-title-animated span:nth-child(31) { animation-delay: 2.48s; }
+.hero-title-animated span:nth-child(32) { animation-delay: 2.56s; }
+.hero-title-animated span:nth-child(33) { animation-delay: 2.64s; }
+.hero-title-animated span:nth-child(34) { animation-delay: 2.72s; }
+.hero-title-animated span:nth-child(35) { animation-delay: 2.80s; }
+.hero-title-animated span:nth-child(36) { animation-delay: 2.88s; }
+.hero-title-animated span:nth-child(37) { animation-delay: 2.96s; }
+
+/* Set smooth transition baseline for the persona cards */
+.target-persona .card,
+.persona-container .card-item,
+.persona-card,
+.story-card {
+    position: relative;
+    border: 1px solid #F5EAE7;
+    background-color: var(--card-bg, #ffffff);
+    border-radius: 24px;
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), 
+                border-color 0.4s ease, 
+                box-shadow 0.4s ease !important;
+    will-change: transform, border-color, box-shadow;
+}
+
+/* Hover State: Combine micro-scale lifting with signature brand color borders */
+.target-persona .card:hover,
+.persona-container .card-item:hover,
+.persona-card:hover,
+.story-card:hover {
+    transform: translateY(-4px) scale(1.03) !important;
+    border-color: #7A5C58 !important;
+    box-shadow: 0 20px 40px rgba(122, 92, 88, 0.08) !important;
+}
+
+/* CSS styling to drive the infinite winking animation loop */
+.poka-wink-char {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
+    transform-origin: bottom center; 
+    animation: pokaInfiniteWink 3.5s ease-in-out infinite;
+    will-change: transform;
+}
+
+/* Keyframes simulating eye squeezing/blinking and gentle body shifts */
+@keyframes pokaInfiniteWink {
+    0%, 100% {
+        transform: scale(1) rotate(0deg);
+    }
+    20% {
+        transform: scale(0.98, 1.02) rotate(-1deg);
+    }
+    /* 25% to 28% creates the fast visual illusion of squeezing one eye/side dynamically */
+    25% {
+        transform: scale(1.03, 0.95) rotate(2deg);
+    }
+    28% {
+        transform: scale(0.97, 1.01) rotate(1deg);
+    }
+    35% {
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+/* Base style for the Poka profile card with organic transition easing */
+.profile-card,
+.basic-info-section .card,
+.poka-info-card {
+    position: relative;
+    background: #ffffff !important;
+    transition: background 0.6s cubic-bezier(0.25, 1, 0.5, 1), 
+                box-shadow 0.6s cubic-bezier(0.25, 1, 0.5, 1) !important;
+}
+
+/* Hover State 1: Smooth warm ambient glow effect */
+.profile-card:hover,
+.basic-info-section .card:hover,
+.poka-info-card:hover {
+    background: linear-gradient(135deg, #ffffff 0%, #fff8f0 100%) !important;
+    box-shadow: 0 20px 40px rgba(122, 92, 88, 0.05) !important;
+}
+
+/* Speech bubble initial hidden state */
+.poka-bubble {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                opacity 0.5s ease !important;
+}
+
+/* Hover State 2: Reveal the speech bubble with a playful bounce */
+.profile-card:hover .poka-bubble,
+.basic-info-section .card:hover .poka-bubble,
+.poka-info-card:hover .poka-bubble {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Set up the 3D space stage on the wrapper grid container */
+.about-poka .profile-container,
+.about-poka .grid-layout,
+.poka-profile-section .profile-flex-container {
+    perspective: 1000px !important;
+}
+
+/* Base structural setup for the profile cards */
+.about-poka .card,
+.about-poka .profile-card,
+.poka-info-card,
+.poka-story-card,
+.poka-taste-card {
+    position: relative;
+    transform-style: preserve-3d !important;
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                box-shadow 0.5s ease, 
+                border-color 0.3s ease !important;
+    will-change: transform, box-shadow;
+    cursor: pointer;
+    z-index: 1;
+}
+
+/* Active Click State: Explode the card forward through the screen */
+.about-poka .card:active,
+.about-poka .profile-card:active,
+.poka-info-card:active,
+.poka-story-card:active,
+.poka-taste-card:active {
+    z-index: 999 !important; 
+    border-color: #7A5C58 !important;
+    transform: translateZ(80px) scale(1.15) !important; /* Propel forward on Z-axis */
+    box-shadow: 0 40px 80px rgba(122, 92, 88, 0.25), 
+                0 20px 40px rgba(0, 0, 0, 0.12) !important; /* Heavy extreme depth shadow */
+}
+
+/* Layer the character image to launch even further along the Z-axis */
+.about-poka .card:active img,
+.about-poka .profile-card:active img,
+.poka-info-card:active img,
+.poka-story-card:active img,
+.poka-taste-card:active img {
+    transform: translateZ(30px) scale(1.05) !important;
+    transition: transform 0.5s ease;
+}
+
+
+/* =============================================
+   AI PROMPT SIMULATOR & CHARACTER BUILD SECTION
+   ============================================= */
+
+/* Simulator Section — two-column split layout */
+.ai-process-section {
+    background: white;
+}
+
+.ai-simulator-container {
+    display: grid;
+    grid-template-columns: 1fr 1.16fr;
+    gap: 35px;
+    margin-top: 40px;
+    align-items: center;
+}
+
+/* ── Terminal (Left Panel) ── */
+.simulator-terminal {
+    background: #1a1a1a;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+}
+.terminal-nav {
+    background: #2a2a2a;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.nav-dot { width: 10px; height: 10px; border-radius: 50%; }
+.nav-dot.red    { background: #ff5f56; }
+.nav-dot.yellow { background: #ffbd2e; }
+.nav-dot.green  { background: #27c93f; }
+.nav-text {
+    color: #777;
+    font-size: 0.75rem;
+    margin-left: 10px;
+    font-family: monospace;
+}
+.terminal-content {
+    padding: 24px;
+    min-height: 160px;
+}
+.user-label {
+    color: #27c93f;
+    font-family: monospace;
+    font-weight: bold;
+}
+
+/* Pure CSS Typing Effect — activated when section gets .active via IntersectionObserver */
+.typing-target {
+    color: #f1f1f1;
+    font-family: monospace;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    display: inline-block;
+    width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 2px solid #27c93f;
+}
+.ai-process-section.active .typing-target {
+    animation: typingEffect 3.2s steps(50, end) forwards,
+               blinkCursor  0.8s step-end infinite;
+}
+
+/* ── Construction Stage (Right Panel) ── */
+.construction-stage {
+    position: relative;
+    height: 380px;
+    background: #fdfaf7;
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid #e2dad5;
+}
+.stage-grid {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image:
+        linear-gradient(#e2dad5 1px, transparent 1px),
+        linear-gradient(90deg, #e2dad5 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+/* Shared layer base */
+.poka-build-base {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 220px;
+    opacity: 0;
+}
+
+/* Phase 1 — wireframe circle outline */
+.build-layer-1 {
+    height: 220px;
+    border: 2px dashed #7a5c58;
+    border-radius: 50%;
+}
+
+/* Phase 2 — blurred, grayscale ghost portrait */
+.ai-process-section.active .build-layer-2 {
+    background-image: url('img/poka12_re.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 220px;
+    filter: blur(8px) grayscale(100%);
+    opacity: 0; /* still hidden until animation fires */
+}
+
+/* Phase 3 — final crisp character image */
+.final-poka-asset {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+    image-rendering: -webkit-optimize-contrast;
+}
+
+.status-indicator {
+    position: absolute;
+    bottom: 18px;
+    left: 20px;
+    font-size: 0.75rem;
+    font-family: monospace;
+    color: #7a5c58;
+    opacity: 0.5;
+    letter-spacing: 0.04em;
+}
+
+/* ── Synchronized Reveal Timing ── */
+.ai-process-section.active .build-layer-1 {
+    animation: buildReveal 0.6s ease forwards 3.3s;
+}
+.ai-process-section.active .build-layer-2 {
+    animation: buildRevealGhost 0.6s ease forwards 4.3s;
+}
+.ai-process-section.active .build-layer-3 {
+    animation: finalPopOut 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 5.3s;
+}
+
+/* ── Keyframes ── */
+@keyframes typingEffect {
+    from { width: 0; }
+    to   { width: 100%; }
+}
+@keyframes blinkCursor {
+    from, to { border-color: transparent; }
+    50%      { border-color: #27c93f; }
+}
+@keyframes buildReveal {
+    from { opacity: 0; transform: translate(-50%, -50%) scale(0.95); }
+    to   { opacity: 0.4; transform: translate(-50%, -50%) scale(1); }
+}
+@keyframes buildRevealGhost {
+    from { opacity: 0; transform: translate(-50%, -50%) scale(0.95); }
+    to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+@keyframes finalPopOut {
+    0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.6); filter: blur(8px); }
+    100% { opacity: 1; transform: translate(-50%, -50%) scale(1);   filter: blur(0);   }
+}
+
+/* ── Responsive: stack on tablet / mobile ── */
+@media (max-width: 900px) {
+    .ai-simulator-container {
+        grid-template-columns: 1fr;
+    }
+    .construction-stage {
+        height: 320px;
+    }
+}
+
+
+/* =====================================================
+   AI VIBE CODING — CHAT MESSENGER UI  (Light Theme)
+   Overrides the previous dark-terminal styles fully.
+   ===================================================== */
+
+/* Two-column split: chat left, blueprint stage right */
+.ai-simulator-container {
+    display: grid !important;
+    grid-template-columns: 1fr 1.16fr !important;
+    gap: 35px !important;
+    margin-top: 40px !important;
+    align-items: center !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* ── Left Panel: AI Chat Window ── */
+.ai-chat-window {
+    background: #FAF7F4;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid #EAE3DC;
+    box-shadow: 0 10px 25px rgba(122, 92, 88, 0.06);
+}
+
+.chat-header {
+    background: #FFFFFF;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid #EAE3DC;
+}
+
+.ai-status-dot {
+    width: 8px;
+    height: 8px;
+    background: #7A5C58;
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px rgba(122, 92, 88, 0.15);
+    animation: statusPulse 2s ease-in-out infinite;
+}
+
+@keyframes statusPulse {
+    0%, 100% { box-shadow: 0 0 0 3px rgba(122, 92, 88, 0.15); }
+    50%       { box-shadow: 0 0 0 6px rgba(122, 92, 88, 0.05); }
+}
+
+.chat-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #555555;
+    font-family: sans-serif;
+    letter-spacing: 0.02em;
+}
+
+.chat-body {
+    padding: 24px;
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* ── Prompt Chat Bubble ── */
+.chat-bubble.user-prompt {
+    background: #7A5C58;
+    padding: 16px 20px;
+    border-radius: 16px 16px 4px 16px;
+    align-self: flex-end;
+    width: 100%;
+    box-shadow: 0 4px 14px rgba(122, 92, 88, 0.18);
+}
+
+.bubble-tag {
+    display: block;
+    font-size: 0.68rem;
+    color: rgba(234, 227, 220, 0.85);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+/* ── Typing Animation — fires immediately on page load, no .active needed ── */
+.typing-target {
+    color: #FFFFFF !important;
+    font-family: 'Courier New', monospace !important;
+    font-size: 0.95rem !important;
+    line-height: 1.5 !important;
+    display: inline-block !important;
+    width: 0;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+    border-right: 2px solid #FFFFFF !important;
+    animation: typingEffect 3.2s steps(50, end) forwards !important,
+               blinkCursor  0.8s step-end infinite !important;
+}
+
+/* ── Right Panel: Blueprint Construction Stage ── */
+.construction-stage {
+    position: relative !important;
+    height: 380px !important;
+    background: #fdfaf7 !important;
+    border-radius: 24px !important;
+    overflow: hidden !important;
+    border: 1px solid #e2dad5 !important;
+}
+
+.stage-grid {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image:
+        linear-gradient(#e2dad5 1px, transparent 1px),
+        linear-gradient(90deg, #e2dad5 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+/* Shared base for all build layers */
+.poka-build-base {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 220px;
+    opacity: 0;
+}
+
+/* Phase 1 — wireframe circle, fires after typing finishes */
+.build-layer-1 {
+    height: 220px !important;
+    border: 2px dashed #7a5c58 !important;
+    border-radius: 50% !important;
+    animation: buildReveal 0.6s ease forwards 3.3s !important;
+}
+
+/* Phase 2 — blurred grayscale ghost, fires at 4.3s */
+.build-layer-2 {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 220px !important;
+    height: 220px !important;
+    background-image: url('img/poka12_re.png') !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    filter: blur(8px) grayscale(100%) !important;
+    animation: buildReveal 0.6s ease forwards 4.3s !important;
+}
+
+/* Phase 3 — final crisp pop-in, fires at 5.3s */
+.build-layer-3 {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 220px !important;
+    animation: finalPopOut 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 5.3s !important;
+}
+
+.final-poka-asset {
+    width: 100% !important;
+    height: auto !important;
+    display: block !important;
+    object-fit: contain;
+    image-rendering: -webkit-optimize-contrast;
+}
+
+.status-indicator {
+    position: absolute;
+    bottom: 18px;
+    left: 20px;
+    font-size: 0.72rem;
+    font-family: monospace;
+    color: #7a5c58;
+    opacity: 0.5;
+    letter-spacing: 0.06em;
+}
+
+/* ── Keyframes ── */
+@keyframes typingEffect {
+    from { width: 0; }
+    to   { width: 100%; }
+}
+@keyframes blinkCursor {
+    from, to { border-color: transparent; }
+    50%      { border-color: #FFFFFF; }
+}
+@keyframes buildReveal {
+    from { opacity: 0; transform: translate(-50%, -50%) scale(0.95); }
+    to   { opacity: 0.45; transform: translate(-50%, -50%) scale(1); }
+}
+@keyframes finalPopOut {
+    0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.6); filter: blur(8px); }
+    100% { opacity: 1; transform: translate(-50%, -50%) scale(1);   filter: blur(0); }
+}
+
+/* ── Responsive stacking ── */
+@media (max-width: 900px) {
+    .ai-simulator-container {
+        grid-template-columns: 1fr !important;
+    }
+    .construction-stage {
+        height: 320px !important;
+    }
+    .chat-bubble.user-prompt {
+        border-radius: 16px;
+    }
+}
+
+
+/* =====================================================
+   AI PROMPT CONSOLE — Left Panel Redesign
+   Generative AI prompt input interface (no code editor)
+   ===================================================== */
+
+.ai-prompt-console {
+    background: #FFFFFF;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid #E8E1DA;
+    box-shadow: 0 10px 32px rgba(122, 92, 88, 0.09),
+                0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* ── Console Header Bar ── */
+.prompt-console-header {
+    background: #FAFAF9;
+    padding: 11px 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid #EAE3DC;
+}
+
+.console-title {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #3D3D3D;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    flex: 1;
+    letter-spacing: 0.01em;
+}
+
+.console-model-tag {
+    font-size: 0.66rem;
+    background: linear-gradient(135deg, #7A5C58, #a07068);
+    color: #fff;
+    padding: 3px 9px;
+    border-radius: 20px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+}
+
+/* ── Console Body / Prompt Area ── */
+.prompt-console-body {
+    padding: 18px 18px 20px;
+    background: #FAF8F6;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 240px;
+}
+
+/* Field label row */
+.prompt-field-label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: #7A5C58;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.prompt-field-icon {
+    font-size: 0.78rem;
+    color: #a07068;
+    line-height: 1;
+}
+
+/* White textarea-like field */
+.prompt-field-area {
+    background: #FFFFFF;
+    border: 1.5px solid #E0D8D2;
+    border-radius: 14px;
+    padding: 16px 18px;
+    flex: 1;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.025),
+                0 1px 3px rgba(122, 92, 88, 0.04);
+    position: relative;
+    transition: border-color 0.2s ease;
+}
+
+.prompt-field-area:hover {
+    border-color: #C4AFA9;
+}
+
+/* Multi-line prompt text — no monospace, no code styling */
+.prompt-field-text {
+    font-family: 'Georgia', 'Times New Roman', Georgia, serif;
+    font-size: 0.88rem;
+    line-height: 1.78;
+    color: #2A2A2A;
+    margin: 0;
+    word-break: break-word;
+    white-space: pre-wrap;
+}
+
+/* Blinking cursor at end of text */
+.blinking-cursor {
+    display: inline;
+    color: #7A5C58;
+    font-weight: 900;
+    font-size: 1rem;
+    animation: cursorBlink 1.05s step-end infinite;
+    margin-left: 1px;
+}
+
+@keyframes cursorBlink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+}
+
+/* Responsive: stack on small screens */
+@media (max-width: 900px) {
+    .prompt-console-body {
+        min-height: 180px;
+    }
+    .prompt-field-text {
+        font-size: 0.82rem;
+        line-height: 1.65;
+    }
+}
+
+
+/* =======================================================
+   FOUR-PANEL AI CREATION PROGRESSION
+   ======================================================= */
+
+.ai-process-section {
+    background: #ffffff;
+}
+
+/* Outer four-column grid */
+.four-panel-progression {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-top: 40px;
+}
+
+/* Each individual panel card */
+.progression-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Step badge at the top of each panel */
+.panel-step-label {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #7A5C58;
+    letter-spacing: 0.03em;
+    text-align: center;
+    background: rgba(122, 92, 88, 0.07);
+    border: 1px solid rgba(122, 92, 88, 0.12);
+    border-radius: 10px;
+    padding: 7px 10px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Inner split: prompt console (left) + stage board (right) — vertical stack */
+.panel-body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
+/* ── Mini Prompt Console ── */
+.mini-prompt-console {
+    background: #FFFFFF;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #E8E1DA;
+    box-shadow: 0 4px 14px rgba(122, 92, 88, 0.07);
+    display: flex;
+    flex-direction: column;
+}
+
+.mini-console-header {
+    background: #FAFAF9;
+    padding: 7px 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-bottom: 1px solid #EAE3DC;
+    flex-shrink: 0;
+}
+
+.mini-console-title {
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: #3D3D3D;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+}
+
+.mini-console-body {
+    padding: 8px 10px 10px;
+    background: #FAF8F6;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.mini-field-label {
+    font-size: 0.56rem;
+    font-weight: 800;
+    color: #7A5C58;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.mini-field-area {
+    background: #FFFFFF;
+    border: 1px solid #E0D8D2;
+    border-radius: 8px;
+    padding: 8px 10px;
+    min-height: 70px;
+}
+
+.mini-field-text {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 0.64rem;
+    line-height: 1.65;
+    color: #2A2A2A;
+    margin: 0;
+    word-break: break-word;
+}
+
+/* Blinking text cursor */
+.blinking-cursor {
+    display: inline;
+    color: #7A5C58;
+    font-weight: 900;
+    font-size: 0.75rem;
+    animation: cursorBlink 1.05s step-end infinite;
+    margin-left: 1px;
+}
+
+@keyframes cursorBlink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+}
+
+/* ── Mini Stage Board (right side of each panel) ── */
+.mini-stage {
+    position: relative;
+    background: #fdfaf7;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e2dad5;
+    min-height: 140px;
+    flex: 1;
+}
+
+/* Blueprint grid background — shared by all stages */
+.mini-stage .stage-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(#e2dad5 1px, transparent 1px),
+        linear-gradient(90deg, #e2dad5 1px, transparent 1px);
+    background-size: 16px 16px;
+}
+
+/* Shared image positioning for all stage states */
+.poka-stage-img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 72%;
+    height: auto;
+    object-fit: contain;
+    image-rendering: -webkit-optimize-contrast;
+    display: block;
+}
+
+/* Stage 1 — empty board (no image) */
+.stage-1 { /* nothing extra needed */ }
+
+/* Stage 2 — faint ghost outline */
+.poka-ghost {
+    opacity: 0.13;
+    filter: blur(2.5px) grayscale(100%);
+}
+
+/* Stage 3 — emerging with warm glow */
+.poka-emerging {
+    opacity: 0.58;
+    filter: blur(0.5px) brightness(1.05);
+}
+
+/* Warm pulsing glow ring behind emerging character */
+.poka-glow-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: radial-gradient(
+        circle,
+        rgba(255, 200, 150, 0.55) 0%,
+        rgba(255, 170, 100, 0.25) 45%,
+        transparent 70%
+    );
+    animation: glowPulse 1.9s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes glowPulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1);   opacity: 0.65; }
+    50%       { transform: translate(-50%, -50%) scale(1.45); opacity: 1;    }
+}
+
+/* Concentric pulsing ring overlay for Stage 3 */
+.stage-3::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(200, 140, 100, 0.4);
+    transform: translate(-50%, -50%) scale(1);
+    animation: ringExpand 2s ease-out infinite;
+    pointer-events: none;
+}
+
+@keyframes ringExpand {
+    0%   { transform: translate(-50%, -50%) scale(0.6); opacity: 0.8; }
+    100% { transform: translate(-50%, -50%) scale(2.2); opacity: 0;   }
+}
+
+/* Stage 4 — full color, complete */
+.poka-complete {
+    opacity: 1;
+    filter: none;
+}
+
+/* Completed status text in Stage 4 */
+.mini-status-indicator {
+    position: absolute;
+    bottom: 7px;
+    left: 9px;
+    right: 9px;
+    font-size: 0.52rem;
+    font-family: monospace;
+    color: #7a5c58;
+    opacity: 0.6;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+    .four-panel-progression {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    .four-panel-progression {
+        grid-template-columns: 1fr;
+    }
+    .mini-stage {
+        min-height: 160px;
+    }
+}
+
+/* =======================================================
+   FOUR-PANEL PROGRESSION - ADDITIONAL STYLES
+   (Dashed Circle, Final Panel Layout Shift, Pop-Out Animation)
+   ======================================================= */
+
+/* Dashed Circle Guide (for Stages 2, 3, 4) */
+.stage-dashed-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 68%;
+    aspect-ratio: 1 / 1;
+    border: 1.5px dashed rgba(122, 92, 88, 0.4);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1; /* Below the image */
+}
+
+.stage-dashed-circle--faded {
+    opacity: 0.15; /* Less prominent in the final stage */
+}
+
+/* Ensure images sit above the dashed circle */
+.poka-ghost,
+.poka-emerging {
+    z-index: 2;
+}
+
+
+/* ── Step 4 Final Panel (Dynamic Pop-Out Layout) ── */
+
+/* Shift panel layout slightly: make the stage area more prominent */
+.panel-body--final {
+    display: flex;
+    flex-direction: column;
+    /* You can adjust flex basis here if needed, but flex-direction column 
+       keeps it consistent. Let's make the stage flex-grow more. */
+}
+
+.mini-prompt-console--final {
+    flex: 0 0 auto; /* Keep it compact */
+    /* Shrink the text slightly to save space for the image */
+}
+.mini-prompt-console--final .mini-field-text {
+    font-size: 0.55rem;
+    line-height: 1.5;
+}
+
+.mini-stage--final {
+    flex: 1 0 auto; /* Take up remaining space */
+    min-height: 200px; /* Force it to be taller */
+    overflow: visible; /* CRITICAL: allow pop-out to break boundaries */
+    background: #fdfaf7; /* Ensure background is set */
+    border: 1px solid #e2dad5;
+    /* Because overflow is visible, the border-radius on the stage won't clip the image */
+}
+.mini-stage--final .stage-grid {
+    border-radius: 12px; /* Keep grid contained */
+    overflow: hidden;
+}
+
+
+/* ── Dynamic Pop-Out Animation ── */
+.poka-pop-out {
+    /* Initial state matches Step 3 (glowing outline) while text types */
+    opacity: 0.58;
+    filter: blur(0.5px) brightness(1.05);
+    z-index: 10; /* Bring to front */
+    
+    /* Delayed by 3s to wait for the typing to finish */
+    animation: finalPopOutDynamic 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 3s; 
+    transform-origin: bottom center; 
+    transform: translate(-50%, -50%) scale(1);
+}
+
+@keyframes finalPopOutDynamic {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.58;
+        filter: blur(0.5px) brightness(1.05);
+    }
+    15% {
+        /* Snaps to full color before popping out */
+        opacity: 1;
+        filter: none;
+    }
+    100% {
+        /* Scale up by 1.4x and pop forward */
+        transform: translate(-50%, -65%) scale(1.4); 
+        opacity: 1;
+        filter: drop-shadow(0 15px 25px rgba(122, 92, 88, 0.25));
+    }
+}
+
+/* Adjust the status indicator for the final panel since overflow is visible */
+.mini-stage--final .mini-status-indicator {
+    z-index: 11;
+    background: rgba(253, 250, 247, 0.85); /* Readability backdrop */
+    padding: 2px 6px;
+    border-radius: 4px;
+    bottom: -8px; /* Push it down slightly */
+}
+
+/* Highlight the final step badge */
+.panel-step-label--final {
+    background: rgba(122, 92, 88, 0.15);
+    border-color: rgba(122, 92, 88, 0.3);
+    color: #5c433f;
+}
+
+/* ── Step 4 Typing Interaction Sequence ── */
+
+/* Simulate typing the full paragraph by sweeping a clip-path from left to right over 3 seconds */
+.typing-sentence {
+    display: inline; /* Keep inline so it wraps naturally */
+    /* Use clip-path inset to reveal text. (top right bottom left) */
+    clip-path: inset(0 100% 0 0);
+    animation: typeSentence 3s linear forwards;
+}
+
+@keyframes typeSentence {
+    from {
+        clip-path: inset(0 100% 0 0);
+    }
+    to {
+        clip-path: inset(0 0 0 0);
+    }
+}
+
+/* Light up the status indicator at the exact moment the pop-out happens */
+.status-light-up {
+    opacity: 0;
+    transform: translateY(5px);
+    animation: statusLightUp 0.4s ease-out forwards 3s; /* Matches the 3s delay of the typing */
+}
+
+@keyframes statusLightUp {
+    0% {
+        opacity: 0;
+        transform: translateY(5px);
+        color: #7a5c58;
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+        color: #27c93f; /* Success green to match the "COMPLETED" state */
+        text-shadow: 0 0 8px rgba(39, 201, 63, 0.4);
+    }
+}
+
