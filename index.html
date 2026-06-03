@@ -289,7 +289,7 @@
             <div class="mini-console-body">
               <div class="mini-field-label">&#10022; 이미지 생성 프롬프트</div>
               <div class="mini-field-area">
-                <p class="mini-field-text"><span class="typing-sentence">POKA(포카)라는 이름의 3D 스타일의 아늑하고 푹신한 곰 인형 캐릭터를 생성해줘. 포카는 바닥에 책상다리를 하고 앉아 따뜻하게 미소 지으며, 한 손을 들어 친근하게 인사를 건네고 있어. 질감은 고급 테디베어처럼 믿을 수 없을 정도로 부드럽고 푹신하며 정교해야 해. 조명은 부드럽고 따뜻하게 설정하여 위로가 되고 든든한 동반자(컴패니언) 느낌을 담아내줘. 배경은 웹앱 인터페이스에 바로 사용할 수 있도록 깔끔하고 중립적이어야 해...</span><span class="blinking-cursor">|</span></p>
+                <p class="mini-field-text"><span class="typing-sentence"></span><span class="blinking-cursor">|</span></p>
               </div>
             </div>
           </div>
@@ -463,6 +463,72 @@
       }, { threshold: 0.25 });
       simObserver.observe(processSection);
     }
+
+    // --- Typing Animation & Image Pop-out Logic ---
+    const typedTextSpan = document.querySelector('.typing-sentence');
+    const cursorSpan = document.querySelector('.blinking-cursor');
+    const popOutImg = document.querySelector('.poka-pop-out');
+    const statusLight = document.querySelector('.status-light-up');
+    const textArray = "POKA(포카)라는 이름의 3D 스타일의 아늑하고 푹신한 곰 인형 캐릭터를 생성해줘. 바닥에 책상다리를 하고 앉아 인사를 건네고 있어.";
+    const typingDelay = 50; // Delay between characters in ms
+    let charIndex = 0;
+    let isAnimated = false; // State flag to prevent overlapping animations
+
+    function typeEffect() {
+      if (charIndex < textArray.length) {
+        typedTextSpan.textContent += textArray.charAt(charIndex);
+        charIndex++;
+        setTimeout(typeEffect, typingDelay);
+      } else {
+        // Hide cursor when typing is done
+        if (cursorSpan) cursorSpan.style.display = 'none';
+        
+        // Trigger the image pop-out and status light animations
+        if (popOutImg) popOutImg.classList.add('animate');
+        if (statusLight) statusLight.classList.add('animate');
+      }
+    }
+
+    function startProcessAnimation() {
+      if (isAnimated) return; // Prevent duplication
+      isAnimated = true;
+      
+      // Ensure text is clear and cursor is visible
+      if (typedTextSpan) typedTextSpan.textContent = '';
+      if (cursorSpan) cursorSpan.style.display = 'inline-block';
+      
+      typeEffect();
+    }
+
+    // 1. Trigger when scrolled into view
+    if (processSection) {
+      const animationObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            startProcessAnimation();
+          }
+        });
+      }, { threshold: 0.5 }); // Trigger when 50% visible
+      animationObserver.observe(processSection);
+    }
+
+    // 2. Trigger from navbar "process" and Hero "제작과정" buttons
+    const processButtons = document.querySelectorAll('a[href="#process"]');
+    processButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = document.querySelector('#process');
+        if (target) {
+          // Smooth scroll to the section
+          target.scrollIntoView({ behavior: 'smooth' });
+          
+          // Fallback to trigger animation if observer misses it (e.g., if already in view)
+          setTimeout(() => {
+            startProcessAnimation();
+          }, 600); // Wait for scroll to complete
+        }
+      });
+    });
   </script>
 
 

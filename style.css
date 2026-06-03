@@ -2359,25 +2359,25 @@ section {
 
 /* ── Dynamic Pop-Out Animation ── */
 .poka-pop-out {
-    /* Initial state matches Step 3 (glowing outline) while text types */
-    opacity: 0.58;
-    filter: blur(0.5px) brightness(1.05);
-    z-index: 10; /* Bring to front */
-    
-    /* Delayed by 3s to wait for the typing to finish */
-    animation: finalPopOutDynamic 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 3s; 
+    /* Initial state: Hidden and scaled down */
+    opacity: 0;
     transform-origin: bottom center; 
-    transform: translate(-50%, -50%) scale(1);
+    transform: translate(-50%, -50%) scale(0);
+    z-index: 10; /* Bring to front */
+}
+
+/* Added dynamically via JS */
+.poka-pop-out.animate {
+    animation: finalPopOutDynamic 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; 
 }
 
 @keyframes finalPopOutDynamic {
     0% {
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 0.58;
-        filter: blur(0.5px) brightness(1.05);
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
     }
-    15% {
-        /* Snaps to full color before popping out */
+    30% {
+        transform: translate(-50%, -50%) scale(1);
         opacity: 1;
         filter: none;
     }
@@ -2406,29 +2406,20 @@ section {
 }
 
 /* ── Step 4 Typing Interaction Sequence ── */
-
-/* Simulate typing the full paragraph by sweeping a clip-path from left to right over 3 seconds */
 .typing-sentence {
     display: inline; /* Keep inline so it wraps naturally */
-    /* Use clip-path inset to reveal text. (top right bottom left) */
-    clip-path: inset(0 100% 0 0);
-    animation: typeSentence 3s linear forwards;
-}
-
-@keyframes typeSentence {
-    from {
-        clip-path: inset(0 100% 0 0);
-    }
-    to {
-        clip-path: inset(0 0 0 0);
-    }
 }
 
 /* Light up the status indicator at the exact moment the pop-out happens */
 .status-light-up {
     opacity: 0;
     transform: translateY(5px);
-    animation: statusLightUp 0.4s ease-out forwards 3s; /* Matches the 3s delay of the typing */
+    color: #7a5c58;
+}
+
+/* Added dynamically via JS */
+.status-light-up.animate {
+    animation: statusLightUp 0.4s ease-out forwards; 
 }
 
 @keyframes statusLightUp {
