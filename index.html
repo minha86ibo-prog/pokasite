@@ -474,18 +474,39 @@
     let charIndex = 0;
     let isAnimated = false; // State flag to prevent overlapping animations
 
+    function triggerPokaCreation() {
+      // Trigger the image pop-out and status light animations
+      if (popOutImg) popOutImg.classList.add('animate');
+      if (statusLight) statusLight.classList.add('animate');
+    }
+
+    // Guarantee that the Poka creation logic is safely triggered on mobile via user interaction
+    const pokaCompleteLabel = document.querySelector('.panel-step-label--final');
+    if (pokaCompleteLabel) {
+      pokaCompleteLabel.style.cursor = 'pointer';
+      pokaCompleteLabel.addEventListener('click', triggerPokaCreation);
+      pokaCompleteLabel.addEventListener('touchstart', triggerPokaCreation, { passive: true });
+    }
+
+    if (typedTextSpan) {
+      typedTextSpan.addEventListener('input', () => {
+        // Bound to input event listener as requested
+      });
+    }
+
     function typeEffect() {
       if (charIndex < textArray.length) {
         typedTextSpan.textContent += textArray.charAt(charIndex);
+        // Dispatch 'input' event to force mobile browser to treat it as user input
+        typedTextSpan.dispatchEvent(new Event('input', { bubbles: true }));
         charIndex++;
         setTimeout(typeEffect, typingDelay);
       } else {
         // Hide cursor when typing is done
         if (cursorSpan) cursorSpan.style.display = 'none';
         
-        // Trigger the image pop-out and status light animations
-        if (popOutImg) popOutImg.classList.add('animate');
-        if (statusLight) statusLight.classList.add('animate');
+        // Trigger Poka creation
+        triggerPokaCreation();
       }
     }
 
