@@ -2620,17 +2620,19 @@ section {
 @media (max-width: 768px) {
   /* Mobile Header Layout */
   .header {
-    position: static; /* Stop floating and obstructing content */
+    position: relative; /* Changed to relative so the dropdown menu can be absolutely positioned */
     height: auto;
-    flex-direction: column;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
     align-items: center;
-    text-align: center;
     padding: 20px;
-    gap: 15px; /* Vertical spacing between logo and hamburger */
+    gap: 20px; /* Horizontal spacing between logo and hamburger */
   }
 
   .hamburger-btn {
     display: flex; /* Ensure hamburger is visible */
+    order: 0; /* Keep natural HTML order (logo then hamburger) */
   }
 
   .nav {
@@ -2640,8 +2642,16 @@ section {
   .nav.active {
     display: flex;
     flex-direction: column;
+    position: absolute;
+    top: 100%; /* Drop down directly below the header */
+    left: 0;
+    width: 100%;
+    background-color: #F8F4EE; /* Solid background matching the site theme */
+    z-index: 9999; /* Higher z-index to cover the POKA character */
+    padding: 20px;
     gap: 15px;
-    padding-bottom: 10px;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05); /* Slight shadow for separation */
+    text-align: left; /* Ensure menu items align nicely */
   }
 
   .hero {
@@ -2690,6 +2700,12 @@ section {
 
   .poka-pop-out {
     max-width: 100%; /* Prevent the scaled image from causing horizontal scroll */
+  }
+
+  /* Instagram CTA Mobile Title */
+  .instagram-cta h2 {
+    font-size: 4.5vw; /* Fluid typography to fit screen width */
+    white-space: nowrap; /* Force the sentence to stay on a single line */
   }
 }
 
