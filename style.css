@@ -30,7 +30,7 @@ img {
 }
 
 section {
-  padding: 140px 80px;
+  padding: 100px 80px;
 }
 
 .section-title {
@@ -78,9 +78,18 @@ section {
 }
 
 .logo {
-  font-size: 28px;
-  font-weight: 800;
-  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  max-height: 55px; /* slightly increased from 50px for balance, adjust if needed */
+  width: auto;
+  object-fit: contain;
+  transform: scale(1.8);
+  transform-origin: left center;
+  position: relative;
+  z-index: 100;
 }
 
 .nav {
@@ -121,14 +130,12 @@ section {
 
 /* hero */
 .hero {
-  min-height: 100vh;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 80px;
 
-  padding-top: 160px;
+  padding-top: 120px;
 }
 
 .hero-text {
@@ -188,6 +195,7 @@ section {
 .hero-image {
   flex: 1;
   position: relative; /* stacking context for crossfade layers */
+  transform: translateX(-120px);
 }
 
 /* ── Shared image layer styles ── */
@@ -372,6 +380,15 @@ section {
   justify-content: center;
 }
 
+@keyframes floatCute {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-15px) rotate(3deg);
+  }
+}
+
 .pose-card img {
   width: 100%;
   height: auto;
@@ -379,7 +396,17 @@ section {
   object-fit: contain;
   image-rendering: -webkit-optimize-contrast;
   image-rendering: crisp-edges;
+  animation: floatCute 2.2s ease-in-out infinite;
 }
+
+.pose-card:nth-child(1) img { animation-delay: 0s; }
+.pose-card:nth-child(2) img { animation-delay: 0.4s; }
+.pose-card:nth-child(3) img { animation-delay: 0.8s; }
+.pose-card:nth-child(4) img { animation-delay: 1.2s; }
+.pose-card:nth-child(5) img { animation-delay: 1.6s; }
+.pose-card:nth-child(6) img { animation-delay: 2.0s; }
+.pose-card:nth-child(7) img { animation-delay: 2.4s; }
+.pose-card:nth-child(8) img { animation-delay: 2.8s; }
 
 
 
@@ -557,7 +584,6 @@ section {
 
 /* 전체 섹션 배경 및 레이아웃 */
 .poka-profile-section {
-  padding: 120px 0;
   background-color: #f8f6f2;
   width: 100%;
   box-sizing: border-box;
@@ -797,6 +823,74 @@ section {
 .poka-profile-section .poka-taste-card h3 .badge-num {
   color: #333;
   background: #e8e3dc;
+}
+
+/* instagram cta */
+.instagram-cta {
+  text-align: center;
+  background-color: #FAF9F6;
+  margin: 0;
+}
+
+.instagram-cta h2 {
+  font-size: 32px;
+  margin-bottom: 16px;
+  color: #1c1c1c;
+  font-weight: 700;
+}
+
+.instagram-cta p {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 32px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+  word-break: keep-all;
+}
+
+.instagram-cta .cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: #F8F4EE; /* bright warm beige */
+  color: #4A3525; /* deep chocolate brown */
+  padding: 16px 32px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 700;
+  border: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.instagram-cta .cta-btn i {
+  background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 1.4rem;
+}
+
+.instagram-cta .cta-btn:hover {
+  background-color: #f1ebd8;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+@media (max-width: 768px) {
+  .instagram-cta h2 {
+    font-size: 24px;
+  }
+  .instagram-cta p {
+    font-size: 14px;
+  }
+  .instagram-cta .cta-btn {
+    font-size: 15px;
+    padding: 14px 28px;
+  }
 }
 
 .poka-profile-section .taste-flex-wrap {
@@ -1054,7 +1148,6 @@ section {
 
   /* Profile Section */
   .poka-profile-section {
-    padding: 60px 0;
   }
 
   .poka-profile-section .poka-title-area {
@@ -2435,4 +2528,90 @@ section {
         text-shadow: 0 0 8px rgba(39, 201, 63, 0.4);
     }
 }
-
+
+/* Goods Shop CTA Button */
+.goods-shop-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 30px;
+    padding: 0;
+}
+
+.goods-shop-btn {
+    display: inline-block;
+    padding: 14px 28px;
+    background-color: #F8F4EE; /* match theme warm beige */
+    color: #4A3525; /* dark brown */
+    text-decoration: none;
+    font-size: 1.05rem;
+    font-weight: 700;
+    border-radius: 30px;
+    box-shadow: 0 4px 12px rgba(74, 53, 37, 0.1);
+    transition: all 0.3s ease;
+}
+
+.goods-shop-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(74, 53, 37, 0.15);
+}
+
+/* Scroll to Top Button (POKA Shop Custom Theme) */
+.poka-shop-top-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #F8F4EE; /* warm bright beige to match E-commerce site */
+  padding: 0;
+  border: none;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(74, 53, 37, 0.15); /* matching brown subtle shadow */
+  z-index: 1000;
+  
+  /* Initial hidden state */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+}
+
+.poka-shop-top-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.poka-shop-top-btn.show-btn {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.poka-shop-top-btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(74, 53, 37, 0.2);
+}
+
+.poka-shop-top-btn .top-label {
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  font-weight: 800;
+  color: #4A3525;
+  background-color: rgba(248, 244, 238, 0.9); /* matches the button's beige */
+  padding: 2px 8px;
+  border-radius: 10px;
+  letter-spacing: 0.5px;
+  z-index: 2;
+  pointer-events: none;
+  box-shadow: 0 2px 4px rgba(74, 53, 37, 0.1);
+}
