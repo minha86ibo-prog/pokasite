@@ -563,7 +563,7 @@
             startProcessAnimation();
           }
         });
-      }, { threshold: 0.5 }); // Trigger when 50% visible
+      }, { threshold: window.innerWidth <= 768 ? 0.15 : 0.5 }); // Trigger earlier on mobile (15%) because section is taller than viewport
       animationObserver.observe(processSection);
     }
 

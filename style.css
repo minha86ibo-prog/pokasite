@@ -2614,4 +2614,82 @@ section {
   z-index: 2;
   pointer-events: none;
   box-shadow: 0 2px 4px rgba(74, 53, 37, 0.1);
-}
+}
+
+/* Responsive Mobile Hero Layout */
+@media (max-width: 768px) {
+  /* Mobile Header Layout */
+  .header {
+    position: static; /* Stop floating and obstructing content */
+    height: auto;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    gap: 15px; /* Vertical spacing between logo and hamburger */
+  }
+
+  .hamburger-btn {
+    display: flex; /* Ensure hamburger is visible */
+  }
+
+  .nav {
+    display: none; /* Hide horizontal nav by default */
+  }
+
+  .nav.active {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-bottom: 10px;
+  }
+
+  .hero {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 20px; /* Reduce the massive gap between image and text */
+    padding-top: 40px; /* Adjusted since header is no longer fixed taking up space */
+  }
+
+  .hero-image {
+    transform: none; /* Remove horizontal shift */
+    order: -1; /* Place image above the text */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .hero-image .hero-img-default,
+  .hero-image .hero-img-hover {
+    max-width: 80%; /* Scale down properly */
+    height: auto;
+  }
+
+  .hero-text {
+    width: 100%;
+  }
+
+  .hero-text h1 {
+    white-space: normal; /* Allow text to wrap on mobile to prevent overflow */
+  }
+
+  .hero-buttons {
+    justify-content: center;
+  }
+
+  /* Fix AI Prompt Studio Animation Visibility for Mobile */
+  .ai-process-section,
+  .four-panel-progression,
+  .progression-panel,
+  .progression-panel--final,
+  .panel-body--final,
+  .mini-stage--final {
+    overflow: visible !important;
+  }
+
+  .poka-pop-out {
+    max-width: 100%; /* Prevent the scaled image from causing horizontal scroll */
+  }
+}
+
