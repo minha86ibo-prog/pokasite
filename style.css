@@ -94,15 +94,16 @@ section {
 
 .nav {
   display: flex;
-  gap: 42px;
+  gap: 48px;
 }
 
 .nav a {
   text-decoration: none;
   color: #111;
-  font-size: 15px;
+  font-size: 17px;
+  font-weight: 600;
   position: relative;          /* underline pseudo-element anchor */
-  padding-bottom: 4px;         /* space for the underline bar */
+  padding-bottom: 6px;         /* space for the underline bar */
   transition: color 0.3s ease;
 }
 
@@ -599,24 +600,19 @@ section {
 /* 상단 타이틀 구역 */
 .poka-profile-section .poka-title-area {
   text-align: center;
-  margin-bottom: 70px;
+  margin-bottom: 80px;
 }
 
 .poka-profile-section .poka-subtitle {
-  font-size: 14px;
+  font-size: 13px;
   letter-spacing: 3px;
-  color: #8b5e3c;
-  font-weight: 700;
-  display: block;
-  margin-bottom: 12px;
+  color: #999;
 }
 
 .poka-profile-section .poka-main-title {
-  font-size: 34px;
-  font-weight: 800;
-  color: #222;
-  margin: 0;
-  letter-spacing: -0.5px;
+  font-size: 48px;
+  margin-top: 14px;
+  font-weight: 700;
 }
 
 /* 메인 콘텐츠 2단 레이아웃 (3단에서 2단 배열로 최적화) */
